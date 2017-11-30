@@ -10,7 +10,7 @@
 
 <meta name="author" content="Jiantao Shi" />
 
-<meta name="date" content="2017-11-13" />
+<meta name="date" content="2017-11-30" />
 
 <title>Network-based pathway over-representation analysis with NetORA</title>
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="header">
 <h1 class="title">Network-based pathway over-representation analysis with NetORA</h1>
 <h4 class="author"><em>Jiantao Shi</em></h4>
-<h4 class="date"><em>13 November 2017</em></h4>
+<h4 class="date"><em>30 November 2017</em></h4>
 <h4 class="abstract">Abstract</h4>
 <p>We have developed a R package <a href="https://github.com/JiantaoShi/NetGPA">NetGAP</a> for network-based gene prioritization using text-mining and coexpression networks. NetORA is an extension of this package to perform network-based pathway enrichment analysis.</p>
 </div>
@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <li><a href="#global-networks"><span class="toc-section-number">2.1.4</span> Global networks</a></li>
 </ul></li>
 <li><a href="#quick-start"><span class="toc-section-number">2.2</span> Quick Start</a></li>
+<li><a href="#pre-computed-networks"><span class="toc-section-number">2.3</span> Pre-computed networks</a></li>
 </ul></li>
 <li><a href="#network-databases"><span class="toc-section-number">3</span> Network databases</a></li>
 <li><a href="#citation"><span class="toc-section-number">4</span> Citation</a></li>
@@ -99,7 +100,7 @@ names(Example_NetGPA)</code></pre>
 <p>In vignettes of NetGPA, we have used gene prioritization to identify pathways that drive DNA methylation transformation <span class="citation">(Zachary D. Smith 2017)</span>. Here we took an more intuitive approach by directly performing network-based pathway enrichment analysis.</p>
 <pre class="r"><code># Genes near hyper-methylated CpG Islands in Mouse ExE
 ExE_Hyper     &lt;- Example_NetGPA$ExE_Hyper</code></pre>
-<p>We treat <code>ExE_Hyper</code> as a annotated pathway.</p>
+<p>We treat <code>ExE_Hyper</code> as an annotated pathway.</p>
 </div>
 <div id="signatures" class="section level3">
 <h3><span class="header-section-number">2.1.2</span> Signatures</h3>
@@ -184,11 +185,44 @@ mergedT[order(mergedT$pvalue), ]</code></pre>
 ## 9  0.1571 9.999963e-01</code></pre>
 <p>You can clearly see that only FGF-related signaling pathways are statistically significant.</p>
 </div>
+<div id="pre-computed-networks" class="section level2">
+<h2><span class="header-section-number">2.3</span> Pre-computed networks</h2>
+<p>Building networks is time-consuming, we thus have pre-computed networks for all canonical pathways defined in MSigDB, using FDR 0.05 as cutoff. They can be loaded as a data set in R <code>data(MSigDB_NetORA_GS)</code>. Let’s revisit the example we discussed above. In our previous study <span class="citation">(Zachary D. Smith 2017)</span>, we have identified a list of potential pathways that regulate DNA methylation of a signature genes <code>ExE_Hyper</code>. In above section, we built a network using <code>ExE_Hyper</code>, and tested enrichment potential pathways. Here, we will do it in a reverse way.</p>
+<pre class="r"><code>data(MSigDB_NetORA_GS)
+PG &lt;- colnames(text_2006_12_NetGPA)
+CancerPathway &lt;- paste0(&quot;REACTOME_&quot;, Example_NetGPA$CancerPathway)
+mergedT &lt;- NetORA_MSigDB_CP(ExE_Hyper, MSigDB_NetORA_GS[CancerPathway], PG)
+
+mergedT[order(mergedT$pvalue), ]</code></pre>
+<pre><code>##                                                      Pathway nSG  nSR
+## 10                                REACTOME_SIGNALING_BY_FGFR 260 3673
+## 5                      REACTOME_SIGNALING_BY_FGFR_IN_DISEASE 260 3547
+## 2  REACTOME_NGF_SIGNALLING_VIA_TRKA_FROM_THE_PLASMA_MEMBRANE 260 3276
+## 8                    REACTOME_DOWNSTREAM_SIGNAL_TRANSDUCTION 260 3431
+## 3                                 REACTOME_SIGNALLING_BY_NGF 260 3378
+## 4                                REACTOME_SIGNALING_BY_ERBB2 260 3218
+## 7                       REACTOME_SIGNALING_BY_EGFR_IN_CANCER 260 3373
+## 6                                REACTOME_SIGNALING_BY_ERBB4 260 2241
+## 1                              REACTOME_SIGNALING_BY_SCF_KIT 260 2449
+## 9               REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM 260 2888
+##    nOverlap    ES       pvalue          FDR
+## 10       97 1.913 5.401353e-12 5.401353e-11
+## 5        91 1.859 1.753193e-10 1.577874e-09
+## 2        66 1.459 4.120740e-04 3.296592e-03
+## 8        68 1.436 5.319814e-04 3.723870e-03
+## 3        65 1.394 1.577755e-03 9.466530e-03
+## 4        62 1.396 1.981885e-03 9.909426e-03
+## 7        62 1.332 5.987946e-03 2.395178e-02
+## 6        39 1.261 5.299439e-02 1.589832e-01
+## 1        38 1.124 1.901741e-01 3.803482e-01
+## 9        41 1.028 3.817132e-01 3.817132e-01</code></pre>
+<p>As expected, FGF-related signaling pathways are more statistically significant than others.</p>
+</div>
 </div>
 <div id="network-databases" class="section level1">
 <h1><span class="header-section-number">3</span> Network databases</h1>
 <p>NetORA could use all networks that are accepted by NetGPA. In current release of NetGPA, we have provided a text-mining network(<code>text_2006_12_NetGPA</code>), a co-expression network(<code>ce_v12_08_NetGPA</code>) and a integrative network(<code>DEPICT_2015_01_NetGPA</code>).</p>
-<p>In the future, we will release more networks, including co-expression networks for Human, Mouse and Rat.</p>
+<p>In the future, we will release more networks, including co-expression networks for Mouse and Rat.</p>
 </div>
 <div id="citation" class="section level1">
 <h1><span class="header-section-number">4</span> Citation</h1>
@@ -197,7 +231,7 @@ mergedT[order(mergedT$pvalue), ]</code></pre>
 <div id="session-info" class="section level1">
 <h1><span class="header-section-number">5</span> Session info</h1>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.4.1 (2017-06-30)
+<pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS High Sierra 10.13.1
 ## 
@@ -215,9 +249,9 @@ mergedT[order(mergedT$pvalue), ]</code></pre>
 ## [1] NetORA_0.99.0   NetGPA_0.99.0   BiocStyle_2.4.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.4.1  backports_1.1.1 magrittr_1.5    rprojroot_1.2  
-##  [5] tools_3.4.1     htmltools_0.3.6 yaml_2.1.14     Rcpp_0.12.13   
-##  [9] stringi_1.1.5   rmarkdown_1.6   knitr_1.17      stringr_1.2.0  
+##  [1] compiler_3.4.2  backports_1.1.1 magrittr_1.5    rprojroot_1.2  
+##  [5] tools_3.4.2     htmltools_0.3.6 yaml_2.1.14     Rcpp_0.12.14   
+##  [9] stringi_1.1.6   rmarkdown_1.6   knitr_1.17      stringr_1.2.0  
 ## [13] digest_0.6.12   evaluate_0.10.1</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
