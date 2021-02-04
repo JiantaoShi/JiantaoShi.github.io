@@ -2299,7 +2299,7 @@ cd ./mHapTools/htslib-1.10.2
 make
 make install
 cd ..
-g++ -o mhaptools  convert.cpp hap.cpp haptk.cpp merge.cpp beta.cpp summary.cpp -I ./htslib-1.10.2/htslib -I ./include  -L ./htslib-1.10.2/ -lhts -std=c++11
+g++ -o mhaptools  haptk.cpp convert.cpp mhap.cpp merge.cpp beta.cpp summary.cpp utils.cpp -I ./htslib-1.10.2/htslib -I ./include  -L ./htslib-1.10.2/ -lhts -std=c++11
 export LD_LIBRARY_PATH=`pwd`/htslib-1.10.2/lib</code></pre>
 </div>
 
