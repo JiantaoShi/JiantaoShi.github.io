@@ -2282,7 +2282,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="introduction-to-bioinformatics" class="section level2">
 <h2>Introduction to bioinformatics</h2>
 <ul>
-<li><a href="course/Notes_PSA.html">Pairwise sequence alignment</a></li>
+<li><a href="course/Notes_Alignment.html">Sequence alignment</a></li>
+<li><a href="course/Notes_Phylogenetic.html">Phylogenetic tree</a></li>
 </ul>
 </div>
 <div id="machine-learning" class="section level2">
@@ -2351,7 +2352,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
