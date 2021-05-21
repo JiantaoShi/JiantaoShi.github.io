@@ -2327,7 +2327,22 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <div id="for-other-genomes" class="section level2">
 <h2>For other genomes</h2>
-<p>If you are working with other genomes, you can let us konw and we will add more annotation files in the future. Alternatively, you can generate them as described below.</p>
+<p>If you are working with other genomes, you can let us konw and we will add more annotation files in the future. Alternatively, we have provided a <a href="annotation_files.py">convenient tool</a> to build annotation files for any species with a reference genome.</p>
+<pre><code>python annotation_files.py -h
+usage: annotation_files.py [-h] --file FILE [--out OUT] [--mode MODE]
+
+A simple tool to convert fasta file to cytosine position file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --file FILE, -i FILE  Input the file name. eg:hg19.fa
+  --out OUT, -o OUT     Input the output file name. eg:result
+  --mode MODE, -m MODE  Input mode. CHH,CHG or CpG</code></pre>
+<p>Example usage:</p>
+<pre><code>python annotation_files.py -i hg19.fa -o hg19 -m CpG</code></pre>
+<p>This command outputs a CpG annotation file <code>hg19_CpG</code> which can be further indexed:</p>
+<pre><code>cat hg19_CpG | bgzip &gt; hg19_CpG.gz
+tabix -b 2 -e 3 -p bed hg19_CpG.gz</code></pre>
 </div>
 
   </div> <!-- articleBandContent -->
