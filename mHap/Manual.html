@@ -2363,7 +2363,7 @@ Options:
   -g  flag get genome-wide result
   -s  flag group results by the direction of mhap reads
   -o  str  output filename [genome_wide.txt | summary.txt]</code></pre>
-<p>This function summerizes discordant methylation in pre-defined regions or genome wide. The output file is a genomic position-based format with 9 columns, including <code>chr</code>, <code>start</code>, <code>end</code>, <code>strand</code>,<code>nReads</code>, <code>mBase</code>,<code>tBase</code>, <code>K4plus</code> and <code>nDR</code>.</p>
+<p>This function summerizes discordant methylation in pre-defined regions or genome wide. The output file is a genomic position-based format with 9 columns, including <code>chr</code>, <code>start</code>, <code>end</code>, <code>strand</code>,<code>nReads</code>, <code>mBase</code>,<code>tBase</code>, <code>K4plus</code>, <code>nDR</code> and <code>nMR</code>.</p>
 <blockquote>
 <table>
 <colgroup>
@@ -2395,19 +2395,25 @@ Options:
 </tr>
 <tr class="odd">
 <td align="right">nDR</td>
-<td align="center">the number of reads with discordant methylation status amomg all reads defined by K4plus</td>
+<td align="center">the number of reads with discordant methylation status among all reads defined by K4plus</td>
+</tr>
+<tr class="even">
+<td align="right">nMR</td>
+<td align="center">the number of fully methylated reads among all reads defined by K4plus</td>
 </tr>
 </tbody>
 </table>
 </blockquote>
-<pre class="r"><code>&lt;chr&gt; &lt;start&gt; &lt;end&gt; &lt;strand&gt; &lt;nReads&gt; &lt;mBase&gt; &lt;tBase&gt; &lt;K4plus&gt; &lt;nDR&gt;
-chr1    762415  763445  *       38      0       106     0       0
-chr1    805197  805628  *       65      4       186     19      0
-chr1    839693  840619  *       197     6       945     113     0
-chr1    844298  845883  *       214     173     535     39      16
-chr1    858969  861632  *       541     59      1932    255     12
-chr1    869331  871872  *       194     392     453     20      7
-chr1    875729  878363  *       580     89      2048    223     11</code></pre>
+<pre class="r"><code>&lt;chr&gt; &lt;start&gt; &lt;end&gt; &lt;strand&gt; &lt;nReads&gt; &lt;mBase&gt; &lt;tBase&gt; &lt;K4plus&gt; &lt;nDR&gt; &lt;nMR&gt;
+chr1    875729  878363  *       1660    303     14245   1541    238     239
+chr1    886355  886602  *       193     973     1034    140     48      140
+chr1    894312  902654  *       2816    3984    22785   2488    701     925
+chr1    906295  906538  *       245     696     1472    216     210     212
+chr1    919725  919927  *       56      66      215     12      1       1
+chr1    933386  937410  *       2748    2480    22890   2574    1230    1234
+chr1    948669  948894  *       62      12      432     62      5       6
+chr1    954767  956343  *       870     161     5655    637     109     109
+chr1    967965  970238  *       1216    1035    7429    927     348     359</code></pre>
 <p>Get summary within a region:</p>
 <pre><code>mhaptools summary -i in.mhap.gz -c CpG.gz -r chr1:2000-200000</code></pre>
 <p>Get summary for several regions defined in a BED file:</p>
