@@ -2342,7 +2342,7 @@ optional arguments:
 <pre><code>python annotation_files.py -i hg19.fa -o hg19 -m CpG</code></pre>
 <p>This command outputs a CpG annotation file <code>hg19_CpG</code> which can be further indexed:</p>
 <pre><code>cat hg19_CpG | bgzip &gt; hg19_CpG.gz
-tabix -b 2 -e 3 -p bed hg19_CpG.gz</code></pre>
+tabix -b 2 -e 3 hg19_CpG.gz</code></pre>
 </div>
 
   </div> <!-- articleBandContent -->

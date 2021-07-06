@@ -2313,7 +2313,7 @@ chr1    10525   10542   11      5       +
 chr1    10525   10563   111     2       +</code></pre>
 <p>The mHap file is genomic position-based, and could be indexed by <a href="http://www.htslib.org/doc/tabix.html">Tabix</a> for random access.</p>
 <pre class="bash"><code>cat out.mhap |sort -k1,1 -k2,2n | bgzip &gt; out.mhap.gz
-tabix -b 2 -e 3 -p bed out.mhap.gz</code></pre>
+tabix -b 2 -e 3 out.mhap.gz</code></pre>
 </div>
 <div id="mhap-to-cpg-site-summary" class="section level1">
 <h1>mHap to CpG site summary</h1>
@@ -2350,7 +2350,7 @@ Options:
 <p>Example of usage:</p>
 <pre><code>mhaptools merge -i in1.mhap.gz in2.mhap.gz in3.mhap.gz -c CpG.gz</code></pre>
 <p>The output file <em>out.mhap.gz</em> can be further indexed:</p>
-<pre><code>tabix -b 2 -e 3 -p bed out.mhap.gz</code></pre>
+<pre><code>tabix -b 2 -e 3 out.mhap.gz</code></pre>
 </div>
 <div id="summary-of-discordant-methylation" class="section level1">
 <h1>Summary of discordant methylation</h1>
