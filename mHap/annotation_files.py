@@ -52,7 +52,7 @@ def main():
             break
 
         # new chr
-        if ">chr" in line and "_" not in line:
+        if (">chr" in line or ">KB" in line) and "_" not in line:
             pass_flag = False
 
             if lastSeqs != "":
